@@ -1,0 +1,336 @@
+  <!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Pastikan Anda sudah memuat CSS Bootstrap dan FontAwesome di head ini atau dari file terpisah -->
+
+<!-- Bootstrap 4 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+        <style>
+  /* =========================================
+   1. TOP HEADER (Kontak Atas)
+   ========================================= */
+#top-header {
+    background-color: #1E1F29; /* Background warna gelap (mendekati hitam) */
+    padding: 12px 0;
+    border-bottom: 4px solid #D10024; /* Garis tebal warna merah di bawah */
+}
+
+.header-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px; /* Jarak antar info kontak */
+}
+
+.header-links li a {
+    color: #ffffff;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.header-links li i {
+    color: #D10024; /* Memberikan warna merah pada Ikon */
+    margin-right: 8px;
+}
+
+/* =========================================
+   2. NAVIGATION MENU (Home & Peminjam)
+   ========================================= */
+#navigation {
+    background-color: #ffffff;
+    padding-top: 30px;
+    border-bottom: 1px solid #E4E7ED; /* Opsional: garis pembatas sangat tipis */
+}
+
+.main-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav li a {
+    color: #333333;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Menu yang sedang aktif (Home) */
+.main-nav li.active a {
+    color: #ef233c; 
+    border-bottom: 3px solid #ef233c; /* Garis merah di bawah teks menu yang aktif */
+}
+
+/* =========================================
+   3. SECTION TITLE (PEMINJAMAN RUANGAN)
+   ========================================= */
+.section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.section-title {
+    margin-bottom: 40px;
+}
+
+.section-title .title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2F3542;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* =========================================
+   4. PRODUCT CARD (Card Foto & Tombol)
+   ========================================= */
+
+   /* Memaksa pembungkus utama menjadi flexbox yang bisa di-scroll ke samping */
+.products-slick {
+    display: flex !important;       /* Menyusun isinya ke samping */
+    overflow-x: auto;               /* Memunculkan scrollbar horizontal jika isinya melebihi layar */
+    gap: 20px;                      /* Jarak antar card */
+    padding-bottom: 20px;           /* Memberi ruang sedikit di bawah untuk scrollbar */
+    scroll-snap-type: x mandatory;  /* Membuat efek snapping (berhenti pas di elemen saat digeser) */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* Biar smooth saat digeser di layar sentuh (HP) */
+}
+/* Mengubah tampilan scrollbar agar lebih tipis dan elegan */
+.products-slick::-webkit-scrollbar {
+    height: 8px; /* Tinggi scrollbar horizontal */
+}
+.products-slick::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+}
+.products-slick::-webkit-scrollbar-thumb {
+    background: #ef233c; /* Warna scrollbar disamakan dengan warna tombol */
+    border-radius: 10px;
+}
+.products-slick::-webkit-scrollbar-thumb:hover {
+    background: #D10024; 
+}
+
+.product-card {
+    background-color: transparent;
+    margin-bottom: 30px;
+    overflow: hidden; /* Mencegah elemen keluar dari card */
+}
+
+.product-image img {
+    width: 100%;
+    height: 250px; /* Tinggi gambar dibuat pas (seragam) */
+    object-fit: cover; /* Agar gambar tidak gepeng */
+    display: block;
+}
+
+/* Kotak gelap di bagian bawah foto */
+.product-action {
+    background-color: #1E1F29; /* Sesuai persis dengan gambar, warna kotak gelap */
+    padding: 25px;
+    text-align: center;
+}
+
+/* Tombol Merah Oval (Pill shape) */
+.btn-pinjam {
+    background-color: #ef233c; /* Warna kemerahan */
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 12px 50px; /* Padding besar agar tombol lebar */
+    border-radius: 50px; /* Membuat bentuk obat (oval) */
+    border: none;
+    cursor: pointer;
+    transition: 0.3s background-color, 0.3s transform;
+    text-transform: uppercase;
+}
+
+.btn-pinjam:hover {
+    background-color: #D10024; /* Warnanya lebih gelap saat disorot */
+    transform: translateY(-2px); /* Tombol sedikit naik ke atas saat disorot */
+}
+
+</style>
+
+  </head>
+  <body>
+
+    <!-- TOP HEADER -->
+<div id="top-header">
+    <div class="container">
+        <ul class="header-links pull-left">
+            <li><a href="#"><i class="fa fa-phone"></i> (024) 6712680</a></li>
+            <li><a href="#"><i class="fa fa-envelope"></i> bbpvpsemarang@kemnaker.go.id</a></li>
+            <li><a href="#"><i class="fa fa-map-marker"></i> Jalan Brigjen Sudiarto No 118 Semarang, Jawa Tengah</a></li>
+        </ul>
+    </div>
+</div>
+<!-- /TOP HEADER -->
+<!-- NAVIGATION -->
+<nav id="navigation">
+    <div class="container">
+        <ul class="main-nav">
+            <!-- Tambahkan class="active" untuk menu yang sedang dibuka -->
+            <li class="<?= (pageActive === '' ? 'active' : '') ?>"><a href="<?= webAppUrl ?>">Home</a></li>
+            <li class="<?= (pageActive === 'peminjam' ? 'active' : '') ?>"><a href="<?= webAppUrl ?>?page=peminjam">Peminjam</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- /NAVIGATION -->
+
+
+    <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800"></h1>
+    <div class="card-body">
+        
+        <!-- Action diarahkan ke URL Web App -->
+        <form method="get" action="<?= webAppUrl ?>">
+            <!-- Input hidden ini opsional, tapi sangat berguna jika Anda punya sistem navigasi '?page=peminjam' di doGet(e) -->
+            <input type="hidden" name="page" value="peminjam">
+
+            <div class="form-row align-items-end">
+
+                <div class="col-md-4 mb-2">
+                    <label class="font-weight-bold">Pilih Minggu (Tanggal Awal)</label>
+                    <!-- value startParam dikirim dari Code.gs untuk menyimpan riwayat input tanggal -->
+                    <input type="date" name="start" class="form-control" value="<?= startParam ?>">
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <label class="d-block">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary mr-2">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+
+                    <!-- Reset dikembalikan ke URL Web App tanpa parameter tanggal -->
+                    <a href="<?= webAppUrl ?>?page=peminjam" class="btn btn-secondary">
+                        <i class="fas fa-sync"></i> Reset
+                    </a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+
+<? 
+// 1. Logika Grouping (Bawaan JavaScript pengganti foreach PHP yang pertama)
+var grouped = {};
+for (var i = 0; i < peminjam.length; i++) {
+    var p = peminjam[i];
+    var namaRuangan = p.nama_ruangan;
+    
+    if (!grouped[namaRuangan]) {
+        grouped[namaRuangan] = [];
+    }
+    grouped[namaRuangan].push(p);
+}
+
+var groupedKeys = Object.keys(grouped);
+
+// 2. Fungsi Helper untuk format tanggal ala PHP (d M Y , H:i)
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    var d = new Date(dateString);
+    if (isNaN(d.getTime())) return dateString; // Jika gagal di-parse, kembalikan string aslinya
+    
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'];
+    var day = ('0' + d.getDate()).slice(-2);
+    var month = months[d.getMonth()];
+    var year = d.getFullYear();
+    var hr = ('0' + d.getHours()).slice(-2);
+    var min = ('0' + d.getMinutes()).slice(-2);
+    
+    return day + ' ' + month + ' ' + year + ' , ' + hr + ':' + min;
+}
+?>
+
+<? if (groupedKeys.length > 0) { ?>
+    <? for (var i = 0; i < groupedKeys.length; i++) { ?>
+        <? 
+           var ruanganName = groupedKeys[i];
+           var items = grouped[ruanganName];
+        ?>
+
+        <h5 class="mt-4 font-weight-bold text-primary" style="margin-left:15px;">
+            Ruangan: <?= ruanganName ?>
+        </h5>
+
+        <div class="table-responsive mb-4" style="padding: 0 15px;">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr class="text-center">
+                        <th width="5%">#</th>
+                        <th>Nama</th>
+                        <th>Peminjaman</th>
+                        <th>Pengembalian</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <? var no = 1; ?>
+                    <? for (var j = 0; j < items.length; j++) { ?>
+                        <? 
+                        var item = items[j]; 
+                        
+                        // Logika Regex Whatsapp (Sama persis dengan preg_replace PHP)
+                        var teleponInput = item.telepon ? String(item.telepon) : '';
+                        var wa = teleponInput.replace(/[^0-9]/g, '').replace(/^0/, '62');
+                        // 1. BUAT KATA-KATANYA DI SINI
+                        // Anda bisa memanggil variabel seperti item.nama atau ruanganName
+                        var pesanWa = "Halo " + item.nama + ",\nTerkait permohonan peminjaman " + ruanganName + " pada " + formatDate(item.tanggal_pinjam) + ", kami ingin menginformasikan sehubungan adanya kegiatan yang lebih penting ruangan tersebut dapat dipindah jadwalkan";
+                        // 2. ENCODE PESAN (Agar spasi dan enter terbaca di link URL)
+                        var pesanEncoded = encodeURIComponent(pesanWa);
+                        ?>
+                        
+                        <tr>
+                            <td class="text-center"><?= no++ ?></td>
+                            <td>
+                                <a href="https://wa.me/<?= wa ?>" target="_blank">
+                                    <?= item.nama ?>
+                                </a>
+                            </td>
+                            <td><?= formatDate(item.tanggal_pinjam) ?></td>
+                            <td><?= formatDate(item.tanggal_kembali) ?></td>
+                            <td class="text-center">
+                              <? if (item.status.toLowerCase() == 'diproses' || item.status.toLowerCase() == 'menunggu') { ?>
+                                  <span class="badge badge-warning d-block mb-1">Diproses</span>
+
+                              <? } else if (item.status.toLowerCase() == 'terverifikasi') { ?>
+                                  <span class="badge badge-success d-block mb-2">Terverifikasi</span>
+                                  
+                              <? } else { ?>
+                                  <!-- Opsional: Jika status kosong atau lainnya -->
+                                  <span class="badge badge-secondary d-block mb-2"><?= item.status ?></span>
+                              <? } ?>
+                          </td>
+                        </tr>
+                    <? } ?>
+                </tbody>
+            </table>
+        </div>
+
+    <? } ?>
+<? } else { ?>
+    <div class="alert alert-warning text-center" style="margin: 0 15px;">
+        Data tidak ditemukan
+    </div>
+<? } ?>
+
+</div>
+  </body>
+</html>
