@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+      /* =========================================
+         1. TOP HEADER (Kontak Atas)
+         ========================================= */
+      #top-header {
+          background-color: #1E1F29;
+          padding: 12px 0;
+          border-bottom: 4px solid #D10024;
+      }
+      .header-links {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          gap: 30px;
+      }
+      .header-links li a {
+          color: #ffffff;
+          font-size: 13px;
+          text-decoration: none;
+          font-weight: 500;
+      }
+      .header-links li i {
+          color: #D10024;
+          margin-right: 8px;
+      }
+
+      /* =========================================
+         2. NAVIGATION MENU (Home & Peminjam)
+         ========================================= */
+      #navigation {
+          background-color: #ffffff;
+          padding-top: 30px;
+          border-bottom: 1px solid #E4E7ED;
+      }
+      .main-nav {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          gap: 30px;
+      }
+      .main-nav li a {
+          color: #333333;
+          font-size: 16px;
+          font-weight: 500;
+          text-decoration: none;
+          padding-bottom: 10px;
+          display: inline-block;
+      }
+      .main-nav li.active a {
+          color: #ef233c; 
+          border-bottom: 3px solid #ef233c;
+      }
+
+      /* =========================================
+         3. SECTION TITLE (PEMINJAMAN RUANGAN)
+         ========================================= */
+      .section {
+          padding-top: 50px;
+          padding-bottom: 50px;
+      }
+      .section-title {
+          margin-bottom: 40px;
+      }
+      .section-title .title {
+          font-size: 26px;
+          font-weight: 700;
+          color: #2F3542;
+          text-transform: uppercase;
+          margin: 0;
+      }
+
+      /* =========================================
+         4. LAIN-LAIN / TOMBOL
+         ========================================= */
+      .custom-card {
+          background: #fff;
+          padding: 40px;
+          border-radius: 18px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
+      .form-label {
+          margin-bottom: 8px;
+      }
+      .form-control-lg {
+          border-radius: 12px;
+      }
+      .btn-modern {
+          border-radius: 50px;
+          font-weight: 600;
+      }
+      .btn-slot {
+          cursor: pointer;
+      }
+    </style>
+  </head>
+
+<body>
+
+  <!-- TOP HEADER -->
+  <div id="top-header">
+      <div class="container">
+          <ul class="header-links pull-left">
+              <li><a href="#"><i class="fa fa-phone"></i> (024) 6712680</a></li>
+              <li><a href="#"><i class="fa fa-envelope"></i> bbpvpsemarang@kemnaker.go.id</a></li>
+              <li><a href="#"><i class="fa fa-map-marker"></i> Jalan Brigjen Sudiarto No 118 Semarang, Jawa Tengah</a></li>
+          </ul>
+      </div>
+  </div>
+  <!-- /TOP HEADER -->
+
+  <!-- NAVIGATION MENU -->
+  <nav id="navigation">
+      <div class="container">
+          <ul class="main-nav">
+              <li class="<?= (pageActive === '' ? 'active' : '') ?>"><a href="<?= webAppUrl ?>">Home</a></li>
+              <li class="<?= (pageActive === 'peminjam' ? 'active' : '') ?>"><a href="<?= webAppUrl ?>?page=peminjam">Peminjam</a></li>
+          </ul>
+      </div>
+  </nav>
+  <!-- /NAVIGATION MENU -->
+
+  <div class="container-fluid py-5">
+      <div class="row align-items-start">
+
+<div class="col-md-6 mb-4">
+          <div class="card-body">
+    <div class="row mt-3">
+        <? for (var i = 0; i < jam_operasional.length; i++) { 
+             var jam = jam_operasional[i];
+        ?>
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                <!-- Awalnya SEMUA TOMBOL DIGEMBOK DULU, menunggu user memilih tanggal -->
+                <button type="button" class="btn btn-slot w-100 btn-outline-secondary disabled" 
+                        disabled data-jam="<?= jam ?>" title="Pilih kalender bulan/hari dulu">
+                    <i class="fa fa-lock mr-1"></i> <?= jam ?>
+                </button>
+            </div>
+        <? } ?>
+    </div>
+    
+    <small class="text-danger mt-2 d-block text-center fw-bold">
+        <i class="fa fa-info-circle"></i> Silakan tentukan <b>Tanggal Pinjam</b> di form peminjaman untuk membuka slot jam!
+    </small>
+</div>
+</div>
+
+
+          <!-- FORM KANAN -->
+          <div class="col-lg-6 col-md-12">
+              <section id="formulir">
+                  <div class="custom-card mx-auto">
+                      <h3 class="text-center mb-5 fw-bold">Form Permohonan</h3>
+
+                      <form id="formPeminjaman" class="needs-validation" onsubmit="kirimData(event, this)" novalidate>
+      
+                          <input type="hidden" name="id_ruangan" value="<?= id_ruangan ?>">
+
+                          <!-- IDENTITAS -->
+                          <div class="mb-4">
+                              <label class="form-label fw-semibold">Nama</label>
+                              <input type="text" class="form-control form-control-lg" name="nama" required>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-md-6 mb-4">
+                                  <label class="form-label fw-semibold">NIP</label>
+                                  <input type="text" class="form-control form-control-lg" name="nip" required>
+                              </div>
+
+                              <div class="col-md-6 mb-4">
+                                  <label class="form-label fw-semibold">Operator</label>
+                                  <input type="text" class="form-control form-control-lg" name="operator" required>
+                              </div>
+                          </div>
+
+                          <!-- WAKTU -->
+                          <div class="row">
+                              
+                              <!-- TANGGAL DAN JAM PINJAM -->
+                              <div class="col-md-6 mb-4">
+                                <label class="form-label fw-bold">Tanggal dan Jam Pinjam</label>
+                              <input type="date"
+                                class="form-control form-control-lg mb-2"
+                                id="tgl_pinjam"
+                                name="tgl_pinjam"
+                                onchange="cekKetersediaanJam()" 
+                                required>
+
+                                  <!-- Jam ini yang akan otomatis terisi saat tombol jam di kiri di-klik -->
+                                  <input type="time"
+                                      class="form-control form-control-lg bg-light"
+                                      id="jam_pinjam"
+                                      name="jam_pinjam"
+                                      readonly
+                                      required>
+                                  <small class="text-muted">
+                                      Pilih waktu peminjaman di sebelah kiri
+                                  </small>
+                              </div>
+                          
+                              <!-- TANGGAL DAN JAM KEMBALI -->
+                              <div class="col-md-6 mb-4">
+                                  <label class="form-label fw-bold">Tanggal dan Jam Kembali</label>
+                                  <input type="date"
+                                      class="form-control form-control-lg mb-2"
+                                      id="tgl_kembali"
+                                      name="tgl_kembali"
+                                      required>
+                                  <input type="time"
+                                      class="form-control form-control-lg"
+                                      id="jam_kembali"
+                                      name="jam_kembali"
+                                      required>
+                                  <small class="text-muted">
+                                      Jam kembali harus setelah jam pinjam
+                                  </small>
+                              </div>
+                              
+                          </div> <!-- /Penutup Row Waktu yang Benar -->
+
+                          <!-- KEGIATAN -->
+                          <div class="mb-4">
+                              <label class="form-label fw-semibold">Telepon</label>
+                              <input type="text"
+                                  class="form-control form-control-lg"
+                                  name="telepon"
+                                  required>
+                          </div>
+                          <div class="mb-4">
+                              <label class="form-label fw-semibold">Kegiatan</label>
+                              <input type="text"
+                                  class="form-control form-control-lg"
+                                  name="keterangan"
+                                  required>
+                          </div>
+
+                          <!-- BUTTON -->
+                          <div class="text-center mt-6 pt-3">
+                              <button type="submit" id="btnSubmit" class="btn btn-primary btn-modern px-5 py-3">
+                                  <i class="fa fa-paper-plane me-2"></i>
+                                  Kirim Permohonan
+                              </button>
+                          </div>
+                      </form>
+                  </div>
+              </section>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      /* ==================================================
+         1. FUNGSI KETIKA TOMBOL HIJAU BERHASIL DIKLIK
+         (Ini yang sebelumnya hilang sehingga tombol macet)
+         ================================================== */
+      function pilihJamTersedia(jamDipilih, objekTombol) {
+          // Hanya mengisi input Jam Pinjam form di kanan
+          document.getElementById('jam_pinjam').value = jamDipilih;
+          
+          // Mengubah warna tombol untuk menandakan sedang dipilih
+          var semuaTombol = document.querySelectorAll('.btn-slot');
+          semuaTombol.forEach(function(tombol) {
+              // Abaikan tombol yang sedang tergembok (berwarna abu-abu)
+              if (tombol.classList.contains('btn-warning') || tombol.classList.contains('btn-success')) {
+                  tombol.classList.remove('btn-warning'); 
+                  tombol.classList.add('btn-success');    
+              }
+          });
+          
+          // Beri warna kuning pada tombol yang sedang Anda klik
+          objekTombol.classList.remove('btn-success');
+          objekTombol.classList.add('btn-warning'); 
+      }
+
+      /* ==================================================
+         2. FUNGSI UNTUK MENGIRIM FORM KE GOOGLE SHEETS
+         ================================================== */
+      function kirimData(event, formObject) {
+          event.preventDefault(); 
+          
+          // Cek proteksi apakah pengguna sudah memencet/memilih jam dari daftar tombol
+          if (!document.getElementById('jam_pinjam').value) {
+              alert("Peringatan: Anda belum memilih Jam Pinjam! Silakan klik tombol jam yang tersedia di sebelah kiri.");
+              return;
+          }
+
+          var tombol = document.getElementById("btnSubmit");
+          var isiTombolAsli = tombol.innerHTML;
+          
+          tombol.innerHTML = "<i class='fa fa-spinner fa-spin me-2'></i> Menyimpan...";
+          tombol.disabled = true;
+
+          google.script.run
+              .withSuccessHandler(function(response) {
+                  alert("Permohonan Peminjaman Berhasil Dikirim!");
+                  window.top.location.href = "<?= webAppUrl ?>"; 
+              })
+              .withFailureHandler(function(error) {
+                  alert("Gagal mengirim data. Error: " + error.message);
+                  tombol.innerHTML = isiTombolAsli;
+                  tombol.disabled = false;
+              })
+              .simpanPeminjam(formObject);
+      }
+
+      /* ==================================================
+         3. MENGECEK JAM SECARA OTOMATIS SAAT TANGGAL DIPILIH
+         ================================================== */
+      function cekKetersediaanJam() {
+          var kalenderDipilih = document.getElementById('tgl_pinjam').value;
+          var idRuang = document.querySelector('input[name="id_ruangan"]').value;
+          
+          document.getElementById('jam_pinjam').value = ""; // Kosongkan form jam
+          var semuaTombol = document.querySelectorAll('.btn-slot');
+          
+          if (!kalenderDipilih) return;
+
+          // Saat sedang nyari data, ubah sementara angka di tombol jadi logo loading berputar
+          semuaTombol.forEach(function(btn) {
+              btn.innerHTML = '<i class="fa fa-spinner fa-spin mr-1"></i>';
+              btn.disabled = false; // Aktifkan sementara agar klik berfungsi
+          });
+
+          // Panggil Google Sheets
+          google.script.run
+              .withSuccessHandler(function(jadwalTertutup) {
+                   var waktuKini = new Date();
+                   var formatKini = waktuKini.getFullYear() + "-" + ("0" + (waktuKini.getMonth() + 1)).slice(-2) + "-" + ("0" + waktuKini.getDate()).slice(-2);
+                   var isPilihHariIni = (kalenderDipilih === formatKini);
+                   
+                   semuaTombol.forEach(function(btn) {
+                       var teksJam = String(btn.getAttribute('data-jam')).trim();
+                       var isSudahLaku = jadwalTertutup.includes(teksJam);
+                       var isHangusTerlewat = false;
+                       
+                       // Cek apakah jam peminjaman sudah lewat dari jam asli hari ini
+                       if (isPilihHariIni) {
+                           // Pakai regex pembagi titik dua (:) atau titik (.) untuk menghindari error jam 12.00
+                           var jamDipisah = teksJam.split(/[:.]/); 
+                           var patokanJam = new Date(waktuKini.getFullYear(), waktuKini.getMonth(), waktuKini.getDate(), parseInt(jamDipisah[0]), parseInt(jamDipisah[1]));
+                           
+                           if (patokanJam <= waktuKini) {
+                               isHangusTerlewat = true;
+                           }
+                       }
+                       
+                       if (isSudahLaku || isHangusTerlewat) {
+                           // TOMBOL DIGEMBOK (Muncul Pop-Up Jika Dipaksa Klik)
+                           btn.className = "btn btn-slot w-100 btn-secondary"; 
+                           btn.innerHTML = '<i class="fa fa-lock mr-1"></i> ' + teksJam;
+                           
+                           btn.onclick = function() {
+                               if (isSudahLaku) {
+                                   alert("Maaf, Jam " + teksJam + " sudah ada peminjam! Silakan pilih jam lain yang berwarna hijau.");
+                               } else {
+                                   alert("Maaf, Jam " + teksJam + " sudah terlewat waktu! Silakan pilih jam ke depannya.");
+                               }
+                           };
+                       } else {
+                           // TOMBOL BISA DIKLIK (Hijau)
+                           btn.className = "btn btn-slot w-100 btn-success";
+                           btn.innerHTML = '<i class="fa fa-clock-o mr-1"></i> ' + teksJam;
+                           
+                           // Memberikan perintah klik ke fungsi yang benar
+                           btn.onclick = function() {
+                              pilihJamTersedia(teksJam, btn);
+                           };
+                       }
+                   });
+              })
+              .getJamTerpakai(idRuang, kalenderDipilih);
+      }
+  </script>
+
+
+</body>
+</html>
