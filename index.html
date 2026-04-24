@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+
+    <!-- Bootstrap 4 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+  /* =========================================
+   1. TOP HEADER (Kontak Atas)
+   ========================================= */
+#top-header {
+    background-color: #1E1F29; /* Background warna gelap (mendekati hitam) */
+    padding: 12px 0;
+    border-bottom: 4px solid #D10024; /* Garis tebal warna merah di bawah */
+}
+
+.header-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px; /* Jarak antar info kontak */
+}
+
+.header-links li a {
+    color: #ffffff;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.header-links li i {
+    color: #D10024; /* Memberikan warna merah pada Ikon */
+    margin-right: 8px;
+}
+
+/* =========================================
+   2. NAVIGATION MENU (Home & Peminjam)
+   ========================================= */
+#navigation {
+    background-color: #ffffff;
+    padding-top: 30px;
+    border-bottom: 1px solid #E4E7ED; /* Opsional: garis pembatas sangat tipis */
+}
+
+.main-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.main-nav li a {
+    color: #333333;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* Menu yang sedang aktif (Home) */
+.main-nav li.active a {
+    color: #ef233c; 
+    border-bottom: 3px solid #ef233c; /* Garis merah di bawah teks menu yang aktif */
+}
+
+/* =========================================
+   3. SECTION TITLE (PEMINJAMAN RUANGAN)
+   ========================================= */
+.section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.section-title {
+    margin-bottom: 40px;
+}
+
+.section-title .title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #2F3542;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* =========================================
+   4. PRODUCT CARD (Card Foto & Tombol)
+   ========================================= */
+
+   /* Memaksa pembungkus utama menjadi flexbox yang bisa di-scroll ke samping */
+.products-slick {
+    display: flex !important;       /* Menyusun isinya ke samping */
+    overflow-x: auto;               /* Memunculkan scrollbar horizontal jika isinya melebihi layar */
+    gap: 20px;                      /* Jarak antar card */
+    padding-bottom: 20px;           /* Memberi ruang sedikit di bawah untuk scrollbar */
+    scroll-snap-type: x mandatory;  /* Membuat efek snapping (berhenti pas di elemen saat digeser) */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* Biar smooth saat digeser di layar sentuh (HP) */
+}
+/* Mengubah tampilan scrollbar agar lebih tipis dan elegan */
+.products-slick::-webkit-scrollbar {
+    height: 8px; /* Tinggi scrollbar horizontal */
+}
+.products-slick::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 10px;
+}
+.products-slick::-webkit-scrollbar-thumb {
+    background: #ef233c; /* Warna scrollbar disamakan dengan warna tombol */
+    border-radius: 10px;
+}
+.products-slick::-webkit-scrollbar-thumb:hover {
+    background: #D10024; 
+}
+
+.product-card {
+    background-color: transparent;
+    margin-bottom: 30px;
+    overflow: hidden; /* Mencegah elemen keluar dari card */
+}
+
+.product-image img {
+    width: 100%;
+    height: 250px; /* Tinggi gambar dibuat pas (seragam) */
+    object-fit: cover; /* Agar gambar tidak gepeng */
+    display: block;
+}
+
+/* Kotak gelap di bagian bawah foto */
+.product-action {
+    background-color: #1E1F29; /* Sesuai persis dengan gambar, warna kotak gelap */
+    padding: 25px;
+    text-align: center;
+}
+
+/* Tombol Merah Oval (Pill shape) */
+.btn-pinjam {
+    background-color: #ef233c; /* Warna kemerahan */
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 12px 50px; /* Padding besar agar tombol lebar */
+    border-radius: 50px; /* Membuat bentuk obat (oval) */
+    border: none;
+    cursor: pointer;
+    transition: 0.3s background-color, 0.3s transform;
+    text-transform: uppercase;
+}
+
+.btn-pinjam:hover {
+    background-color: #D10024; /* Warnanya lebih gelap saat disorot */
+    transform: translateY(-2px); /* Tombol sedikit naik ke atas saat disorot */
+}
+
+</style>
+  </head>
+
+<body>
+
+  <!-- TOP HEADER -->
+<div id="top-header">
+    <div class="container">
+        <ul class="header-links pull-left">
+            <li><a href="#"><i class="fa fa-phone"></i> (024) 6712680</a></li>
+            <li><a href="#"><i class="fa fa-envelope"></i> bbpvpsemarang@kemnaker.go.id</a></li>
+            <li><a href="#"><i class="fa fa-map-marker"></i> Jalan Brigjen Sudiarto No 118 Semarang, Jawa Tengah</a></li>
+        </ul>
+    </div>
+</div>
+<!-- /TOP HEADER -->
+<!-- NAVIGATION MENU -->
+<nav id="navigation">
+    <div class="container">
+        <ul class="main-nav">
+            <!-- Tambahkan class="active" untuk menu yang sedang dibuka -->
+            <li class="<?= (pageActive === '' ? 'active' : '') ?>"><a href="<?= webAppUrl ?>">Home</a></li>
+            <li class="<?= (pageActive === 'peminjam' ? 'active' : '') ?>"><a href="<?= webAppUrl ?>?page=peminjam">Peminjam</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- /NAVIGATION MENU -->
+
+<!-- SECTION -->
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">PEMINJAMAN RUANGAN</h3>
+                </div>
+            </div>
+            <!-- /section title -->
+
+            <!-- Products tab & slick -->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs">
+                        <!-- tab -->
+                        <div id="tab1" class="tab-pane active">
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                
+                                <!-- Loop menggunakan JavaScript bawaan templating GAS -->
+                                <? for (var i = 0; i < ruangan.length; i++) { ?>
+                                    <? var r = ruangan[i]; ?>
+                                    
+                                    <!-- Menambahkan class "product-custom" agar tidak bertabrakan dengan style bawaan template -->
+                                    <div class="product product-custom">
+                                        
+                                        <!-- Gambar Ruangan -->
+                                        <div class="product-image">
+                                            <!-- Langsung panggil variabel r.foto (URL dari Google Drive) -->
+                                            <img src="<?= r.foto ?>" alt="<?= r.nama_ruangan ?>">
+                                          <p class="product-category"><?= r.jenis_ruangan ?></p>
+		                                            <h3 class="product-name"><?= r.nama ?></h3>
+                                        </div>
+                                        
+                                        <!-- Kotak Gelap & Tombol Pinjam -->
+                                        <div class="product-action">
+                                            <!-- URL Tujuan Web App Apps Script -->
+                                            <button class="btn-pinjam"
+                                                onclick="window.open('<?= webAppUrl ?>?page=cek&id=<?= r.id_ruangan ?>', '_top')">
+                                                PINJAM
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
+                                <? } ?>
+                                <!-- /product -->
+
+                            </div>
+                            <div id="slick-nav-1" class="products-slick-nav"></div>
+                        </div>
+                        <!-- /tab -->
+                    </div>
+                </div>
+            </div>
+            <!-- Products tab & slick -->
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+</body>
+</html>
